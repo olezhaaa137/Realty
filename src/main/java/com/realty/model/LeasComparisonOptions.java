@@ -33,12 +33,12 @@ public class LeasComparisonOptions {
             request.append("Авансовый платёж: "+leasOptions.get(i).getAdvance() + " процентов, ");
             request.append("Выкупная стоимость: "+leasOptions.get(i).getRedemption() + " процентов, ");
             request.append("Возмещение стоимости: "+leasOptions.get(i).getCompensation() + " рублей, ");
-            request.append("Процентная ставка по лизингу: "+leasOptions.get(i).getResultedLeaseRate() + " процентов, ");
             request.append("Итоговый лизинговый платеж: "+leasOptions.get(i).getResultCost() + " рублей; ");
             if (i!=leasOptions.size()-1){
                 request.append(" или стоит выбрать вот этот вариант ");
             }
         }
+        request.append(" объясни во всех подробностях свой выбор и расскажи что стоит учитывать при выборе лизингового решения.");
         requestToGPT = request.toString();
     }
 

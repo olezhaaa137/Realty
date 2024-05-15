@@ -22,31 +22,41 @@
 </div>
 <br><br>
  <div class="flex items-center justify-around font-serif">
-  <div class="border-solid border-2 rounded-md bg-orange-100" th:each="leasOption : ${leasComparisonOptions.leasOptions}">
-   <label for="cost">Стоимость: </label>
-   <p id="cost" th:text="${leasOption.cost + ' рублей'}"></p>
-
-   <label for="term">Срок лизинга: </label>
-   <p id="term" th:text="${leasOption.term + ' месяцев'}"></p>
-
-   <label for="leaseRate">Ставка по лизингу: </label>
-   <p id="leaseRate" th:text="${leasOption.leaseRate + ' %'}"></p>
-
-   <label for="advance">Авансовый платёж: </label>
-   <p id="advance" th:text="${leasOption.advance + ' %'}"></p>
-
-   <label for="redemption">Выкупная стоимость: </label>
-   <p id="redemption" th:text="${leasOption.redemption + ' %'}"></p>
-
-   <label for="compensation">Возмещение стоимости: </label>
-   <p id="compensation" th:text="${leasOption.compensation + ' рублей'}"></p>
-
-   <label for="resultedLeaseRate">Процентная ставка по лизингу: </label>
-   <p id="resultedLeaseRate" th:text="${leasOption.resultedLeaseRate + ' %'}"></p>
-
-   <label for="resultCost">Итоговый лизинговый платеж: </label>
-   <p id="resultCost" th:text="${leasOption.resultCost + ' рублей'}"></p>
-  </div>
+   
+      <div th:each="leasOption : ${leasComparisonOptions.leasOptions}" class="p-6 bg-white border border-gray-200 rounded-lg shadow-2xl dark:bg-gray-800 dark:border-gray-700">
+        <div class="space-y-4">
+          <div>
+            <label for="cost" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Стоимость:</label>
+            <p id="cost" th:text="${leasOption.cost + ' рублей'}" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+          </div>
+          <div>
+            <label for="term" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Срок лизинга:</label>
+            <p id="term" th:text="${leasOption.term + ' месяцев'}" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+          </div>
+          <div>
+            <label for="leaseRate" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Ставка по лизингу:</label>
+            <p id="leaseRate" th:text="${leasOption.leaseRate + ' %'}" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+          </div>
+          <div>
+            <label for="advance" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Авансовый платёж:</label>
+            <p id="advance" th:text="${leasOption.advance + ' %'}" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+          </div>
+          <div>
+            <label for="redemption" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Выкупная стоимость:</label>
+            <p id="redemption" th:text="${leasOption.redemption + ' %'}" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+          </div>
+          <div>
+            <label for="compensation" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Возмещение стоимости:</label>
+            <p id="compensation" th:text="${leasOption.compensation + ' рублей'}" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+          </div>
+          <div>
+            <label for="resultCost" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Итоговый лизинговый платеж:</label>
+            <p id="resultCost" th:text="${leasOption.resultCost + ' рублей'}" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+          </div>
+        </div>
+      
+    </div>
+    
  </div>
 <div class="flex justify-center mt-8">
  <div class="w-3/4 flex flex-col gap-4">

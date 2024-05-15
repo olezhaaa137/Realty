@@ -1,5 +1,7 @@
 package com.realty.controller;
 
+import com.realty.service.EmailSender;
+import com.realty.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +41,9 @@ public class RegistrationController {
 			return "registration";
 		}
 		userService.addClient(user);
+		EmailSender.getInstance().sendEmail(user.getEmail(), "Добро пожаловать!",
+				"Уважаемый " + user.getName() + " " + user.getLastname() +
+					", Мы рады вас приветствовать!!");
 		return "redirect:/login";
 	}
 }
