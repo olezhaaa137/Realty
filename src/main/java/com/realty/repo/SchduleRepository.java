@@ -43,4 +43,6 @@ public interface SchduleRepository extends JpaRepository<Schedule, Long> {
 	@Transactional
 	@Modifying
 	void deleteByAdvertisementId(Long id);
+
+	int countByAdvertisementRealtorIdAndStatus(Long id, String status);
 }

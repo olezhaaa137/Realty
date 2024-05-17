@@ -30,4 +30,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value = "select * from user "
 			+ "where role like 'client' and (name like ?1 or surname like ?1 or lastname like ?1 or username like ?1 or email like ?1)", nativeQuery = true)
 	List<User> findClients(String findParam);
+
 }

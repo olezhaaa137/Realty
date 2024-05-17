@@ -1,5 +1,8 @@
 package com.realty.controller;
 
+import com.realty.repo.SchduleRepository;
+import com.realty.repo.UserRepository;
+import com.realty.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -10,11 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.realty.model.User;
-import com.realty.service.AdvertisementService;
-import com.realty.service.ClientService;
-import com.realty.service.RealtorService;
-import com.realty.service.UserService;
 import com.realty.webConfig.DateFormatter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -31,6 +33,12 @@ public class AdminController {
 
 	@Autowired
 	private AdvertisementService advertisementService;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private SchduleRepository schduleRepository;
 
 	@GetMapping
 	public String admin(Model model, @AuthenticationPrincipal User user) {
@@ -211,7 +219,20 @@ public class AdminController {
 
 	@GetMapping("/statistics")
 	public String statistics(Model model) {
-		model.addAttribute("realtors", advertisementService.getTopRealtor());
+		List<RealtorStat> realtorsStatBySell = new ArrayList<>();
+		List<RealtorStat> realtorsStatByAppointment = new ArrayList<>();
+		List<User> realtors = userRepository.getRealtors();
+		for(User realtor:realtors){
+			realtorsStatBySell.add(new RealtorStat(realtor.getName(), realtor.getSurname(),
+					schduleRepository.countByAdvertisementRealtorIdAndStatus(realtor.getId(), "Продано") ));
+		}
+		for(User realtor:realtors){
+			realtorsStatByAppointment.add(new RealtorStat(realtor.getName(), realtor.getSurname(),
+					schduleRepository.countByAdvertisementRealtorIdAndStatus(realtor.getId(), "Продано") +
+							schduleRepository.countByAdvertisementRealtorIdAndStatus(realtor.getId(), "Забронировано")));
+		}
+		model.addAttribute("realtorsStatBySell", realtorsStatBySell);
+		model.addAttribute("realtorsStatByAppointment", realtorsStatByAppointment);
 		return "statistics";
 	}
 }

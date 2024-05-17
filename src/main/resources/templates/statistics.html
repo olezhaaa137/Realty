@@ -21,37 +21,78 @@
 					<div th:replace="~{admin :: adminAccount}">
 					</div>
 				</div>
-				
+
 		</div>
 	</div>
 	<div class="container px-10 py-5 pb-10 m-auto">
-		<div class="mb-3 mt-5 text-center uppercase text-[40px] text-gray-500 text-opacity-80 font-medium">Топ риелторов по продажам</div>
-		<div class="flex mt-10 flex-wrap justify-around">
-			<div th:if="${realtors}" class="bg-gray-500 bg-opacity-50 px-10 py-5 rounded-md max-w-[500px]" th:each="realtor : ${realtors}">
-				<div th:text="${realtor.username}" class="text-xl text-center font-semibold"></div>
-				<div class="flex mt-5 items-center justify-between">
-					<div class="text-lg mr-5">Имя:</div>
-					<div th:text="${realtor.name}" class="text-lg font-semibold"></div>
-				</div>
-				<div class="flex mt-2 items-center justify-between">
-					<div class="text-lg mr-5">Фамилия:</div>
-					<div th:text="${realtor.surname}" class="text-lg font-semibold"></div>
-				</div>
-				<div class="flex mt-2 items-center justify-between">
-					<div class="text-lg mr-5">Отчество:</div>
-					<div th:text="${realtor.lastname}" class="text-lg font-semibold"></div>
-				</div>
-				<div class="flex mt-2 items-center justify-between">
-					<div class="text-lg mr-5">Email:</div>
-					<div th:text="${realtor.email}" class="text-lg font-semibold"></div>
-				</div>
-				<div class="flex mt-2 items-center justify-between">
-					<div class="text-lg mr-5">Телефон:</div>
-					<div th:text="${realtor.phone}" class="text-lg font-semibold"></div>
-				</div>
-			</div>
-		</div>
+		<div class="mb-3 mt-5 text-center uppercase text-[40px] text-gray-500 text-opacity-80 font-medium">Риелторы по количеству проданных объектов</div>
 	</div>
+	</div>
+	<div id="data"></div>
+	<div class="container px-10 py-5 pb-10 m-auto">
+		<div class="mb-3 mt-5 text-center uppercase text-[40px] text-gray-500 text-opacity-80 font-medium">Риелторы по количеству назначенных встреч</div>
+	</div>
+	</div>
+	<div id="data2"></div>
 </body>
 <script th:src="@{/js/script.js}"></script>
+<script src="https://www.google.com/jsapi"></script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawChart);
+	const realtorsStatBySell = /*[[${realtorsStatBySell.toArray()}]]*/null;
+
+	var data1=[];
+	var Header= ['Риелтор', 'Риелтор'];
+	data1.push(Header);
+	for (var i = 0; i < realtorsStatBySell.length; i++) {
+		var temp=[];
+		temp.push(realtorsStatBySell[i].name + ' ' + realtorsStatBySell[i].surname);
+		temp.push(realtorsStatBySell[i].count);
+
+		data1.push(temp);
+	}
+	function drawChart() {
+
+		var data = google.visualization.arrayToDataTable(data1);
+
+		var options = {
+			vAxis: {title: 'Количество продаж'}
+		};
+		var chart = new google.visualization.ColumnChart(document.getElementById('data'));
+		chart.draw(data, options);
+	}
+	/*]]>*/
+
+</script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawChart1);
+	const realtorsStatByAppointment = /*[[${realtorsStatByAppointment.toArray()}]]*/null;
+
+	var data2=[];
+	var Header1= ['Риелтор', 'Риелтор'];
+	data2.push(Header1);
+	for (var i = 0; i < realtorsStatByAppointment.length; i++) {
+		var temp1=[];
+		temp1.push(realtorsStatByAppointment[i].name + ' ' + realtorsStatByAppointment[i].surname);
+		temp1.push(realtorsStatByAppointment[i].count);
+
+		data2.push(temp1);
+	}
+	function drawChart1() {
+
+		var data = google.visualization.arrayToDataTable(data2);
+
+		var options = {
+			vAxis: {title: 'Количество встреч'}
+		};
+		var chart = new google.visualization.ColumnChart(document.getElementById('data2'));
+		chart.draw(data, options);
+	}
+	/*]]>*/
+
+</script>
 </html>

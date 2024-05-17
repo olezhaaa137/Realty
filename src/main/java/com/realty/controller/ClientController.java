@@ -58,6 +58,12 @@ public class ClientController {
 		return new LeasComparisonOptions();
 	}
 
+	@ModelAttribute(name="user")
+	public User user(@AuthenticationPrincipal User user){
+		return user;
+	}
+
+
 	@ModelAttribute(name="leasOption")
 	public LeasOption leasOption() {
 		return new LeasOption();
@@ -192,6 +198,7 @@ public class ClientController {
 	public String sortAdvertisement(Model model, String sort) {
 		model.addAttribute("formatter", DateFormatter.getInstance());
 		model.addAttribute("advertisements", advertisementService.sortAdvertisements(sort));
+		model.addAttribute("likedAdvertisementsService", likedAdvertisementsService);
 		return "client.advertisements";
 	}
 
