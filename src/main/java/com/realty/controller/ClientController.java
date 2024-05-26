@@ -63,6 +63,11 @@ public class ClientController {
 		return user;
 	}
 
+	@ModelAttribute(name="comment")
+	public Comment comment(){
+		return new Comment();
+	}
+
 
 	@ModelAttribute(name="leasOption")
 	public LeasOption leasOption() {
@@ -187,10 +192,12 @@ public class ClientController {
 			model.addAttribute("err", "Неверный интервал");
 			model.addAttribute("advertisements", advertisementService.getActiveAdvertisements());
 			model.addAttribute("formatter", DateFormatter.getInstance());
+			model.addAttribute("likedAdvertisementsService", likedAdvertisementsService);
 			return "client.advertisements";
 		}
 		model.addAttribute("formatter", DateFormatter.getInstance());
 		model.addAttribute("advertisements", advertisementService.filterAdvertisements(priceFrom, priceTo));
+		model.addAttribute("likedAdvertisementsService", likedAdvertisementsService);
 		return "client.advertisements";
 	}
 
@@ -206,6 +213,7 @@ public class ClientController {
 	public String findAdvertisement(Model model, String findParam) {
 		model.addAttribute("formatter", DateFormatter.getInstance());
 		model.addAttribute("advertisements", advertisementService.findAdvertisements(findParam));
+		model.addAttribute("likedAdvertisementsService", likedAdvertisementsService);
 		return "client.advertisements";
 	}
 
